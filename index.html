@@ -1,0 +1,30 @@
+ <h3 style="color: #008cff; margin-top:0;">🎥 ইন-অ্যাপ ভিডিও প্লেয়ার</h3>
+                    <p style="font-size:14px; background:#142842; padding:10px; border-radius:5px;">🤖 <b>AI Visual Video:</b> ৩Blue১Brown স্টাইলের লাইভ গ্রাফিক্যাল অ্যানিমেশন লোড হয়েছে।</p>
+                    <p style="font-size:14px; color:#ffd700;">📺 <b>Best YouTube Teacher:</b> আপনার সিলেক্ট করা ভাষার বেস্ট টিউটোরিয়াল ক্লাস লিংক রেডি।</p>
+                `;
+            } else if(feature === 'PRACTICE') {
+                // এআই দ্বারা প্রতিবার তৈরি হওয়া র্যান্ডম প্রশ্ন মডিউল
+                let num1 = Math.floor(Math.random() * 8) + 2;
+                let num2 = Math.floor(Math.random() * 5) + 2;
+                let ans = num1 + num2;
+                display.innerHTML = `
+                    <h3 style="color: #00c853; margin-top:0;">🤖 AI Dynamic Question</h3>
+                    <p style="font-size:16px; font-weight:bold;">প্রশ্ন: যদি ${num1}x + 2 = ${(num1*num2)+2} হয়, তবে x এর মান কত?</p>
+                    <input type="text" placeholder="আপনার উত্তর টাইপ করুন..." class="comment-input" style="background:#0b192c;"><br><br>
+                    <button class="btn-action btn-practice" style="padding:8px; margin:0; font-size:13px;" onclick="alert('সঠিক উত্তর: ${num2} | ব্যাখ্যা: সমীকরণের নিয়ম অনুযায়ী x = ${num2}')">উত্তর জমা দিন (Show Explanation)</button>
+                `;
+            } else if(feature === 'FORUM') {
+                display.innerHTML = `
+                    <h3 style="color: #e040fb; margin-top:0;">💬 গ্লোবাল সোশ্যাল ফোরাম</h3>
+                    <p style="font-size:13px; color:#b0c4de;">বিশ্বের যেকোনো প্রান্ত থেকে নতুন প্রতিভারা এখানে নিজের প্রশ্ন যোগ করতে পারে।</p>
+                    <input type="text" placeholder="আপনার কঠিন প্রশ্নটি এখানে অ্যাড করুন..." class="comment-input"><br>
+                    <input type="text" placeholder="উত্তর লিখুন..." class="comment-input"><br><br>
+                    <button class="btn-action btn-forum" style="padding:8px; margin:0; font-size:13px;" onclick="alert('✅ প্রশ্নটি সফলভাবে গ্লোবাল মহাসমুদ্রে আপলো
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+
+                      
