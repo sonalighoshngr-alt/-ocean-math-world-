@@ -1,4 +1,140 @@
- <h3 style="color: #008cff; margin-top:0;">🎥 ইন-অ্যাপ ভিডিও প্লেয়ার</h3>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ocean of Mathematics</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(180deg, #0b192c 0%, #1e3e62 100%);
+            color: #ffffff; font-family: 'Segoe UI', Arial, sans-serif;
+            text-align: center; min-height: 100vh;
+        }
+        .header {
+            padding: 25px 20px; background: rgba(11, 25, 44, 0.9);
+            border-bottom: 2px solid #00d2c4; position: sticky; top: 0; z-index: 100;
+        }
+        h1 { margin: 0; font-size: 24px; color: #00d2c4; }
+        .security-badge {
+            font-size: 11px; background: #ff4a4a; padding: 3px 8px;
+            border-radius: 12px; display: inline-block; margin-top: 8px;
+        }
+        .prize-box {
+            background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700;
+            padding: 15px; margin: 15px; border-radius: 10px;
+        }
+        .container { padding: 10px 20px; }
+        .tier-card {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px; padding: 18px; margin-bottom: 12px; text-align: left;
+        }
+        .tier-card:active { background: rgba(0, 210, 196, 0.15); border-color: #00d2c4; }
+        .tier-title { font-size: 17px; font-weight: bold; }
+        .tier-desc { font-size: 13px; color: #b0c4de; margin-top: 5px; }
+        
+        /* 📖 INTERACTIVE MODAL WINDOW (পপ-আপ স্ক্রিন ডিজাইন) */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 25, 44, 0.95); z-index: 1000; overflow-y: auto; padding-top: 20px;
+        }
+        .modal-content {
+            background: #142842; margin: 5% auto; padding: 20px;
+            border-radius: 15px; border: 1px solid #00d2c4; width: 85%; text-align: left;
+        }
+        .close-btn {
+            background: #ff4a4a; color: white; padding: 8px 15px; border: none;
+            border-radius: 8px; font-weight: bold; float: right; cursor: pointer;
+        }
+        .btn-action {
+            display: block; width: 100%; padding: 14px; margin: 12px 0;
+            border: none; border-radius: 8px; font-size: 15px; font-weight: bold;
+            color: white; text-align: center; cursor: pointer;
+        }
+        .btn-learn { background: #008cff; }
+        .btn-practice { background: #00c853; }
+        .btn-forum { background: #e040fb; }
+        
+        /* 📺 VIDEO & QUIZ SCREEN DISPLAY */
+        .display-box {
+            background: #0b192c; border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px; border-radius: 8px; margin-top: 15px; display: none;
+        }
+        .comment-input {
+            width: 93%; padding: 10px; border-radius: 6px; border: 1px solid #b0c4de;
+            background: #1e3e62; color: white; margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- হোম স্ক্রিন -->
+    <div class="header">
+        <h1>🌊 The Ocean of Mathematics</h1>
+        <div class="security-badge">🛡️ ANTI-CHEAT ACTIVE</div>
+    </div>
+
+    <div class="prize-box">
+        <span style="color: #ffd700; font-weight: bold;">🏆 GLOBAL PRIZE POOL</span><br>
+        <span style="font-size: 20px; font-weight: bold;">$10,000 USD (Sponsored)</span>
+    </div>
+
+    <div class="container">
+        <div class="tier-card" onclick="openTier('কিডস জোন (Kids Zone)')">
+            <div class="tier-title">⭐ কিডস জোন (Level 1)</div>
+            <div class="tier-desc">ছবি ও মজার অ্যানিমেশনের সাহায্যে সহজ পাটিগণিত।</div>
+        </div>
+
+        <div class="tier-card" onclick="openTier('স্কুল ও কলেজ (Academic Hub)')">
+            <div class="tier-title">📚 স্কুল ও কলেজ (Tier 2)</div>
+            <div class="tier-desc">বীজগণিত, জ্যামিতি, ত্রিকোণমিতি, ক্যালকুলাস ও পরিসংখ্যান হাব।</div>
+        </div>
+
+        <div class="tier-card" onclick="openTier('উচ্চতর পরীক্ষা প্রস্তুতি')">
+            <div class="tier-title">🎯 পরীক্ষা প্রস্তুতি (Competitive Hub)</div>
+            <div class="tier-desc">BCS, IIT-JEE, SAT, GRE গ্লোবাল মক টেস্ট প্রিপারেশন।</div>
+        </div>
+    </div>
+
+    <!-- 🌌 ইন্টারঅ্যাক্টিভ গ্লোবাল পপ-আপ স্ক্রিন -->
+    <div id="tierModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">বন্ধ করুন</button>
+            <h2 id="modalTitle" style="color: #00d2c4; margin-top: 0;"></h2>
+            <p style="color: #b0c4de; font-size: 14px;">আপনার গ্লোবাল অ্যাকশনটি বেছে নিন:</p>
+            
+            <!-- ফিচার বোতামসমূহ -->
+            <button class="btn-action btn-learn" onclick="triggerFeature('LEARN')">📖 আগে কনসেপ্টটি শেখো (ভিডিও)</button>
+            <button class="btn-action btn-practice" onclick="triggerFeature('PRACTICE')">📝 AI ডাইনামিক কুইজ টেস্ট শুরু করো</button>
+            <button class="btn-action btn-forum" onclick="triggerFeature('FORUM')">💬 ইউজার ফোরাম: প্রশ্ন যোগ ও কমেন্ট</button>
+            
+            <!-- ডাইনামিক কনটেন্ট ডিসপ্লে বক্স -->
+            <div id="contentDisplay" class="display-box"></div>
+        </div>
+    </div>
+
+    <!-- ⚙️ জাভাস্ক্রিপ্ট লজিক (ইন্টারঅ্যাকশন কন্ট্রোল) -->
+    <script>
+        let currentTierName = "";
+
+        function openTier(tierName) {
+            currentTierName = tierName;
+            document.getElementById("modalTitle").innerText = tierName;
+            document.getElementById("contentDisplay").style.display = "none";
+            document.getElementById("tierModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("tierModal").style.display = "none";
+        }
+
+        function triggerFeature(feature) {
+            const display = document.getElementById("contentDisplay");
+            display.style.display = "block";
+            
+            if(feature === 'LEARN') {
+                display.innerHTML = `
+                    <h3 style="color: #008cff; margin-top:0;">🎥 ইন-অ্যাপ ভিডিও প্লেয়ার</h3>
                     <p style="font-size:14px; background:#142842; padding:10px; border-radius:5px;">🤖 <b>AI Visual Video:</b> ৩Blue১Brown স্টাইলের লাইভ গ্রাফিক্যাল অ্যানিমেশন লোড হয়েছে।</p>
                     <p style="font-size:14px; color:#ffd700;">📺 <b>Best YouTube Teacher:</b> আপনার সিলেক্ট করা ভাষার বেস্ট টিউটোরিয়াল ক্লাস লিংক রেডি।</p>
                 `;
@@ -27,4 +163,3 @@
 </body>
 </html>
 
-                      
